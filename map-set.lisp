@@ -51,10 +51,11 @@
       (decf (map-set-size ms))
       
       ;; Remove the item from the record.
-      (remhash item tbl)
+      (assert (remhash item tbl))
       
       ;; Update the position of the moved element.
-      (setf (gethash (aref idx location) tbl) location)))
+      (unless (zerop (map-set-size ms))
+        (setf (gethash (aref idx location) tbl) location))))
   ms)
 
 (defun ms-random (ms)
